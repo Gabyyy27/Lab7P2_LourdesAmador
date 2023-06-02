@@ -1,0 +1,5 @@
+ID,NAME,CATEGORY,PRICE,AISLE,BIN
+4555552,carne,2502,22.25,25.0,61.0
+224,huevos,244,122.0,415.0,null
+null,null,null,null,null,null
+null,null,null,null,null,null
