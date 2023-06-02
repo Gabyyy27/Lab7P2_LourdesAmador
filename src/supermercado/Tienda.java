@@ -285,7 +285,7 @@ public class Tienda extends javax.swing.JFrame {
 
 // Crear un StringBuilder para construir el contenido del archivo JSON
         StringBuilder jsonData = new StringBuilder();
-        jsonData.append("[");
+        jsonData.append("[\n");
 
 // Recorrer las filas de la tabla
         for (int row = 0; row < model.getRowCount(); row++) {
@@ -300,18 +300,30 @@ public class Tienda extends javax.swing.JFrame {
                 Object value = model.getValueAt(row, column);
 
                 // Agregar el nombre de la columna y el valor al StringBuilder
-                jsonData.append("\"").append(columnName).append("\": \"").append(value).append("\", ");
+                jsonData.append("\"").append(columnName).append("\": ");
+
+                // Comprobar si el valor es una cadena y agregar comillas dobles si es así
+                if (value instanceof String) {
+                    jsonData.append("\"").append(value).append("\"");
+                } else {
+                    jsonData.append(value);
+                }
+
+                // Agregar una coma después de cada elemento, excepto el último
+                if (column < model.getColumnCount() - 1) {
+                    jsonData.append(", ");
+                }
             }
 
-            // Eliminar la coma extra al final de cada elemento
-            jsonData.delete(jsonData.length() - 2, jsonData.length());
-
-            jsonData.append("},");
+            jsonData.append("},\n");
         }
 
 // Eliminar la coma extra al final del JSON
-        jsonData.delete(jsonData.length() - 1, jsonData.length());
-        jsonData.append("]");
+        if (model.getRowCount() > 0) {
+            jsonData.delete(jsonData.length() - 1, jsonData.length());
+        }
+
+        jsonData.append("\n]");
 
 // Guardar el JSON en un archivo llamado "json.txt"
         try (FileWriter fileWriter = new FileWriter("json.txt")) {

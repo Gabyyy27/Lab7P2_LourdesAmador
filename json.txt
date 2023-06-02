@@ -1,9 +1,11 @@
-"ID": "133", "NAME": "Red Pen", "CATEGORY": "0", "PRICE": "0.99", "AISLE": "121", "BIN": "044"
-"ID": "4478", "NAME": "Razor", "CATEGORY": "4", "PRICE": "2.59", "AISLE": "664", "BIN": "000"
-"ID": "324", "NAME": "Detergente", "CATEGORY": "5", "PRICE": "39.50", "AISLE": "432", "BIN": "005"
-"ID": "4563", "NAME": "Tomate", "CATEGORY": "8", "PRICE": "12.95", "AISLE": "120", "BIN": "021"
-"ID": "12", "NAME": "Leche Condensada", "CATEGORY": "9", "PRICE": "45.00", "AISLE": "110", "BIN": "923"
-"ID": "707", "NAME": "7Up", "CATEGORY": "5", "PRICE": "35.55", "AISLE": "95", "BIN": "908"
-"ID": "236", "NAME": "Vino", "CATEGORY": "5", "PRICE": "129.99", "AISLE": "35", "BIN": "223"
-"ID": "750", "NAME": "Cuaderno Escolar", "CATEGORY": "6", "PRICE": "23.45", "AISLE": "99", "BIN": "25"
-"ID": "34", "NAME": "Candelas", "CATEGORY": "7", "PRICE": "99.99", "AISLE": "60", "BIN": "045"
+[,
+{"ID": "133", "NAME": "Red Pen", "CATEGORY": "0", "PRICE": "0.99", "AISLE": "121", "BIN": "044"},
+{"ID": "4478", "NAME": "Razor", "CATEGORY": "4", "PRICE": "2.59", "AISLE": "664", "BIN": "000"},
+{"ID": "324", "NAME": "Detergente", "CATEGORY": "5", "PRICE": "39.50", "AISLE": "432", "BIN": "005"},
+{"ID": "4563", "NAME": "Tomate", "CATEGORY": "8", "PRICE": "12.95", "AISLE": "120", "BIN": "021"},
+{"ID": "12", "NAME": "Leche Condensada", "CATEGORY": "9", "PRICE": "45.00", "AISLE": "110", "BIN": "923"},
+{"ID": "707", "NAME": "7Up", "CATEGORY": "5", "PRICE": "35.55", "AISLE": "95", "BIN": "908"},
+{"ID": "236", "NAME": "Vino", "CATEGORY": "5", "PRICE": "129.99", "AISLE": "35", "BIN": "223"},
+{"ID": "750", "NAME": "Cuaderno Escolar", "CATEGORY": "6", "PRICE": "23.45", "AISLE": "99", "BIN": "25"},
+{"ID": "34", "NAME": "Candelas", "CATEGORY": "7", "PRICE": "99.99", "AISLE": "60", "BIN": "045"},
+,]
