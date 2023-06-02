@@ -5,8 +5,8 @@
  */
 package supermercado;
 
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -104,11 +104,10 @@ public class Tienda extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Menú Principal", jPanel2);
 
+        tabla2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        tabla2.setForeground(new java.awt.Color(204, 0, 0));
         tabla2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
                 {null, null, null, null, null, null}
             },
             new String [] {
@@ -121,6 +120,13 @@ public class Tienda extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        tabla2.setGridColor(new java.awt.Color(0, 0, 102));
+        tabla2.setSelectionBackground(new java.awt.Color(0, 153, 153));
+        tabla2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tabla2KeyReleased(evt);
             }
         });
         jScrollPane2.setViewportView(tabla2);
@@ -331,6 +337,17 @@ public class Tienda extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void tabla2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabla2KeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            DefaultTableModel model = (DefaultTableModel) tabla2.getModel();
+            model.addRow(new Object[model.getColumnCount()]);
+            int lastRow = model.getRowCount() - 1;
+            int firstCol = tabla2.getSelectedColumn();
+            tabla2.changeSelection(lastRow, firstCol, false, false);
+        }
+    }//GEN-LAST:event_tabla2KeyReleased
 
     /**
      * @param args the command line arguments
