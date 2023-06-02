@@ -51,7 +51,13 @@ public class Tienda extends javax.swing.JFrame {
         Exportar_datos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Super Mercado");
+        setBackground(new java.awt.Color(0, 255, 0));
 
+        tabla1.setBackground(new java.awt.Color(0, 51, 153));
+        tabla1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tabla1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        tabla1.setForeground(new java.awt.Color(255, 255, 255));
         tabla1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -60,6 +66,8 @@ public class Tienda extends javax.swing.JFrame {
                 "ID", "NAME", "CATEGORY", "PRICE", "AISLE", "BIN"
             }
         ));
+        tabla1.setGridColor(new java.awt.Color(0, 153, 0));
+        tabla1.setSelectionBackground(new java.awt.Color(255, 0, 0));
         jScrollPane1.setViewportView(tabla1);
 
         jButton1.setText("EXPORTAR DATOS");
@@ -69,7 +77,7 @@ public class Tienda extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("ACTUALIZAR TABLA");
+        jButton2.setText("CARGAR DATOS");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -159,7 +167,7 @@ public class Tienda extends javax.swing.JFrame {
                 .addGap(21, 21, 21))
         );
 
-        jTabbedPane1.addTab("CrearArchivo", jPanel3);
+        jTabbedPane1.addTab("Crear Archivo", jPanel3);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -245,39 +253,28 @@ public class Tienda extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-        // Crea un JFileChooser
-        JFileChooser fileChooser = new JFileChooser();
+        try {
+            File file = new File("data.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            DefaultTableModel model = (DefaultTableModel) tabla1.getModel();
+            model.setRowCount(0); // Limpiar la tabla antes de cargar los datos
 
-// Configura el filtro de archivos para mostrar solo archivos .txt
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de texto", "txt");
-        fileChooser.setFileFilter(filter);
-
-// Muestra el diálogo de selección de archivo
-        int result = fileChooser.showOpenDialog(this);
-
-// Si se selecciona un archivo
-        if (result == JFileChooser.APPROVE_OPTION) {
-            // Obtén el archivo seleccionado
-            File selectedFile = fileChooser.getSelectedFile();
-
-            try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
-                String line;
-                DefaultTableModel model = (DefaultTableModel) tabla1.getModel();
-                boolean omitirPrimeraFila = true; // Variable para omitir la primera fila
-
-                // Lee el archivo línea por línea y agrega los datos a la tabla
-                while ((line = br.readLine()) != null) {
-                    if (omitirPrimeraFila) {
-                        omitirPrimeraFila = false;
-                        continue; // Omitir la primera fila
-                    }
-
-                    String[] data = line.split(",");
-                    model.addRow(data);
+            // Leer el archivo línea por línea y agregar los datos a la tabla
+            boolean omitirPrimeraFila = true; // Variable para omitir la primera fila
+            while ((line = br.readLine()) != null) {
+                if (omitirPrimeraFila) {
+                    omitirPrimeraFila = false;
+                    continue; // Omitir la primera fila
                 }
-            } catch (IOException ex) {
-                ex.printStackTrace();
+
+                String[] data = line.split(",");
+                model.addRow(data);
             }
+
+            br.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_jButton2MouseClicked
 
@@ -286,11 +283,14 @@ public class Tienda extends javax.swing.JFrame {
         // Obtener el modelo de la tabla
         DefaultTableModel model = (DefaultTableModel) tabla1.getModel();
 
-        // Crear un StringBuilder para construir el contenido del archivo
-        StringBuilder txtData = new StringBuilder();
+// Crear un StringBuilder para construir el contenido del archivo JSON
+        StringBuilder jsonData = new StringBuilder();
+        jsonData.append("[");
 
-        // Recorrer las filas de la tabla
+// Recorrer las filas de la tabla
         for (int row = 0; row < model.getRowCount(); row++) {
+            jsonData.append("{");
+
             // Recorrer las columnas de la tabla
             for (int column = 0; column < model.getColumnCount(); column++) {
                 // Obtener el nombre de la columna
@@ -300,42 +300,32 @@ public class Tienda extends javax.swing.JFrame {
                 Object value = model.getValueAt(row, column);
 
                 // Agregar el nombre de la columna y el valor al StringBuilder
-                txtData.append("\"").append(columnName).append("\": \"").append(value).append("\", ");
+                jsonData.append("\"").append(columnName).append("\": \"").append(value).append("\", ");
             }
 
             // Eliminar la coma extra al final de cada elemento
-            txtData.delete(txtData.length() - 2, txtData.length());
+            jsonData.delete(jsonData.length() - 2, jsonData.length());
 
-            txtData.append("\n");
+            jsonData.append("},");
         }
 
-        // Crear un diálogo de archivo para guardar el archivo
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Guardar archivo");
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+// Eliminar la coma extra al final del JSON
+        jsonData.delete(jsonData.length() - 1, jsonData.length());
+        jsonData.append("]");
 
-        int userSelection = fileChooser.showSaveDialog(this);
+// Guardar el JSON en un archivo llamado "json.txt"
+        try (FileWriter fileWriter = new FileWriter("json.txt")) {
+            fileWriter.write(jsonData.toString());
+            fileWriter.flush();
 
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-
-            // Agregar la extensión .txt si no está presente
-            if (!filePath.toLowerCase().endsWith(".txt")) {
-                filePath += ".txt";
-            }
-
-            // Escribir los datos en el archivo
-            try (FileWriter fileWriter = new FileWriter(filePath)) {
-                fileWriter.write(txtData.toString());
-
-                // Mostrar mensaje de éxito
-                JOptionPane.showMessageDialog(this, "Exportación exitosa");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                // Mostrar mensaje de error
-                JOptionPane.showMessageDialog(this, "Error al exportar los datos", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            // Mostrar mensaje de éxito
+            JOptionPane.showMessageDialog(this, "Los datos se han guardado correctamente en json.txt");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            // Mostrar mensaje de error
+            JOptionPane.showMessageDialog(this, "Error al guardar los datos", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void tabla2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabla2KeyReleased
