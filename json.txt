@@ -1,7 +1,3 @@
-"ID": "null", "NAME": "null", "CATEGORY": "null", "PRICE": "null", "AISLE": "null", "BIN": "null"
-"ID": "null", "NAME": "null", "CATEGORY": "null", "PRICE": "null", "AISLE": "null", "BIN": "null"
-"ID": "null", "NAME": "null", "CATEGORY": "null", "PRICE": "null", "AISLE": "null", "BIN": "null"
-"ID": "null", "NAME": "null", "CATEGORY": "null", "PRICE": "null", "AISLE": "null", "BIN": "null"
 "ID": "133", "NAME": "Red Pen", "CATEGORY": "0", "PRICE": "0.99", "AISLE": "121", "BIN": "044"
 "ID": "4478", "NAME": "Razor", "CATEGORY": "4", "PRICE": "2.59", "AISLE": "664", "BIN": "000"
 "ID": "324", "NAME": "Detergente", "CATEGORY": "5", "PRICE": "39.50", "AISLE": "432", "BIN": "005"
