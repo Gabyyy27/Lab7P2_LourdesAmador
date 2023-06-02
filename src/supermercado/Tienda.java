@@ -47,7 +47,7 @@ public class Tienda extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla2 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        Exportar_datos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,12 +63,6 @@ public class Tienda extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-        }
 
         jButton1.setText("EXPORTAR DATOS");
 
@@ -122,17 +116,11 @@ public class Tienda extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(tabla2);
-        if (tabla2.getColumnModel().getColumnCount() > 0) {
-            tabla2.getColumnModel().getColumn(0).setResizable(false);
-            tabla2.getColumnModel().getColumn(1).setResizable(false);
-            tabla2.getColumnModel().getColumn(2).setResizable(false);
-            tabla2.getColumnModel().getColumn(3).setResizable(false);
-        }
 
-        jButton3.setText("EXPORTAR DATOS");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+        Exportar_datos.setText("EXPORTAR DATOS");
+        Exportar_datos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
+                Exportar_datosMouseClicked(evt);
             }
         });
 
@@ -143,7 +131,7 @@ public class Tienda extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(27, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3)
+                    .addComponent(Exportar_datos)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27))
         );
@@ -153,7 +141,7 @@ public class Tienda extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Exportar_datos, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
 
@@ -184,18 +172,18 @@ public class Tienda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-     
-         try {
+    private void Exportar_datosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Exportar_datosMouseClicked
+      try {
             FileWriter fileWriter = new FileWriter("datos.txt");
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            int rowCount = tabla2.getRowCount();
-            int colCount = tabla2.getColumnCount();
+            DefaultTableModel model = (DefaultTableModel) tabla2.getModel();
+            int rowCount = model.getRowCount();
+            int colCount = model.getColumnCount();
 
             for (int i = 0; i < rowCount; i++) {
                 for (int j = 0; j < colCount; j++) {
-                    Object value = tabla2.getValueAt(i, j);
+                    Object value = model.getValueAt(i, j);
                     bufferedWriter.write(value.toString());
                     if (j < colCount - 1) {
                         bufferedWriter.write("\t");
@@ -209,7 +197,7 @@ public class Tienda extends javax.swing.JFrame {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_jButton3MouseClicked
+    }//GEN-LAST:event_Exportar_datosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -247,9 +235,9 @@ public class Tienda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Exportar_datos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
