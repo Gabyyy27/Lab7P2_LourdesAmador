@@ -197,10 +197,10 @@ public class Tienda extends javax.swing.JFrame {
     private void Exportar_datosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Exportar_datosMouseClicked
         DefaultTableModel model = (DefaultTableModel) tabla2.getModel();
 
-        // Crear un StringBuilder para construir el contenido del archivo
+// Crear un StringBuilder para construir el contenido del archivo
         StringBuilder txtData = new StringBuilder();
 
-        // Obtener los nombres de las columnas
+// Obtener los nombres de las columnas
         int columnCount = model.getColumnCount();
         for (int i = 0; i < columnCount; i++) {
             txtData.append(model.getColumnName(i));
@@ -210,7 +210,7 @@ public class Tienda extends javax.swing.JFrame {
         }
         txtData.append("\n");
 
-        // Obtener los datos de la tabla
+// Obtener los datos de la tabla
         int rowCount = model.getRowCount();
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
@@ -222,33 +222,21 @@ public class Tienda extends javax.swing.JFrame {
             txtData.append("\n");
         }
 
-        // Crear un diálogo de archivo para guardar el archivo
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Guardar archivo");
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+// Ruta de archivo fija
+        String filePath = "datos.txt";
 
-        int userSelection = fileChooser.showSaveDialog(this);
+// Escribir los datos en el archivo
+        try (FileWriter fileWriter = new FileWriter(filePath)) {
+            fileWriter.write(txtData.toString());
 
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-
-            // Agregar la extensión .txt si no está presente
-            if (!filePath.toLowerCase().endsWith(".txt")) {
-                filePath += ".txt";
-            }
-
-            // Escribir los datos en el archivo
-            try (FileWriter fileWriter = new FileWriter(filePath)) {
-                fileWriter.write(txtData.toString());
-
-                // Mostrar mensaje de éxito
-                JOptionPane.showMessageDialog(this, "Exportación exitosa");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                // Mostrar mensaje de error
-                JOptionPane.showMessageDialog(this, "Error al exportar los datos", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            // Mostrar mensaje de éxito
+            JOptionPane.showMessageDialog(this, "Exportación exitosa");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            // Mostrar mensaje de error
+            JOptionPane.showMessageDialog(this, "Error al exportar los datos", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_Exportar_datosMouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
